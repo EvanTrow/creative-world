@@ -1,0 +1,78 @@
+plugins {
+    id "java-library"
+    id "net.neoforged.moddev" version "1.0.17"
+}
+
+group = mod_group_id
+version = mod_version
+
+dependencies {
+    runtimeOnly(files("libs/architectury-13.0.6-neoforge.jar"))
+    runtimeOnly(files("libs/ftb-essentials-neoforge-2101.1.0.jar"))
+    runtimeOnly(files("libs/ftb-library-neoforge-2101.1.1.jar"))
+}
+
+base {
+    archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+neoForge {
+    version = project.neo_version
+
+    runs {
+        client {
+            client()
+        }
+
+        data {
+            data()
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+
+        configureEach {
+            systemProperty "forge.logging.markers", "REGISTRIES"
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+}
+
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            mod_id                  : mod_id,
+            mod_name                : mod_name,
+            mod_license             : mod_license,
+            mod_version             : mod_version,
+            mod_group_id            : mod_group_id,
+            mod_authors             : mod_authors,
+            mod_description         : mod_description,
+
+            minecraft_version       : minecraft_version,
+            minecraft_version_range : minecraft_version_range,
+
+            neo_version             : neo_version,
+            neo_version_range       : neo_version_range,
+            neo_loader_version_range: neo_loader_version_range,
+    ]
+
+    inputs.properties replaceProperties
+    expand replaceProperties
+
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata

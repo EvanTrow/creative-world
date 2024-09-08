@@ -1,0 +1,13 @@
+{
+  "type": "nothing:nothing",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "nothing:nothing",
+      "lakes": false,
+      "features": false,
+      "layers": [],
+      "structure_overrides": []
+    }
+  }
+}
