@@ -2,5 +2,7 @@
   "biome.creativeworld.creativeworld": "Creative World",
   "block.creativeworld.creativeworld_portal": "Creative World Portal",
   "dimension.creativeworld.creativeworld": "Creative World",
-  "creativeworld.missing_portal": "Could not create the portal because a block is already there. Try another location."
+  "creativeworld.missing_portal": "Could not create the portal because a block is already there. Try another location.",
+  "advancement.creativeworld.this_is_not_survival": "This Is Not Survival",
+  "advancement.creativeworld.this_is_not_survival.desc": "Enter the creative dimension."
 }

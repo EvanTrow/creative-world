@@ -2,14 +2,14 @@
 	"type": "minecraft:crafting_shaped",
 	"category": "misc",
 	"key": {
-		"e": {
-			"item": "minecraft:ender_pearl"
+		"b": {
+			"item": "minecraft:bricks"
 		},
-		"o": {
-			"item": "minecraft:obsidian"
+		"p": {
+			"item": "minecraft:ender_pearl"
 		}
 	},
-	"pattern": ["eee", "eoe", "eee"],
+	"pattern": ["bbb", "bpb", "bbb"],
 	"result": {
 		"count": 1,
 		"id": "creativeworld:creativeworld_portal"

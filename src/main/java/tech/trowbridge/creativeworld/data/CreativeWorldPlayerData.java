@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.saveddata.SavedData;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +33,22 @@ public class CreativeWorldPlayerData extends SavedData {
         tag.putInt("XpLevel", player.experienceLevel);
         tag.putFloat("XpProgress", player.experienceProgress);
         tag.putInt("XpTotal", player.totalExperience);
+        // Potion Effects
+        ListTag effects = new ListTag();
+        for (MobEffectInstance effect : player.getActiveEffects()) {
+            effects.add(effect.save());
+        }
+        tag.put("ActiveEffects", effects);
+        // Fire ticks
+        tag.putShort("Fire", (short)player.getRemainingFireTicks());
+        // Air supply
+        tag.putShort("Air", (short)player.getAirSupply());
+        // Absorption
+        tag.putFloat("AbsorptionAmount", player.getAbsorptionAmount());
+        // Motion (velocity)
+        tag.putDouble("MotionX", player.getDeltaMovement().x);
+        tag.putDouble("MotionY", player.getDeltaMovement().y);
+        tag.putDouble("MotionZ", player.getDeltaMovement().z);
         // Creative Inventory (if available)
         if (player.isCreative()) {
             CompoundTag creativeInv = new CompoundTag();
@@ -57,6 +74,27 @@ public class CreativeWorldPlayerData extends SavedData {
             player.experienceLevel = tag.getInt("XpLevel");
             player.experienceProgress = tag.getFloat("XpProgress");
             player.totalExperience = tag.getInt("XpTotal");
+            // Potion Effects
+            player.removeAllEffects();
+            ListTag effects = tag.getList("ActiveEffects", 10);
+            for (int i = 0; i < effects.size(); i++) {
+                MobEffectInstance effect = MobEffectInstance.load(effects.getCompound(i));
+                if (effect != null) {
+                    player.addEffect(effect);
+                }
+            }
+            // Fire ticks
+            player.setRemainingFireTicks(tag.getShort("Fire"));
+            // Air supply
+            player.setAirSupply(tag.getShort("Air"));
+            // Absorption
+            player.setAbsorptionAmount(tag.getFloat("AbsorptionAmount"));
+            // Motion (velocity)
+            player.setDeltaMovement(
+                tag.getDouble("MotionX"),
+                tag.getDouble("MotionY"),
+                tag.getDouble("MotionZ")
+            );
             // Creative Inventory (if available)
             if (tag.contains("CreativeInventory")) {
                 // Restore creative inventory if needed
@@ -70,6 +108,11 @@ public class CreativeWorldPlayerData extends SavedData {
             player.experienceLevel = 0;
             player.experienceProgress = 0;
             player.totalExperience = 0;
+            player.removeAllEffects();
+            player.setRemainingFireTicks(0);
+            player.setAirSupply(player.getMaxAirSupply());
+            player.setAbsorptionAmount(0.0f);
+            player.setDeltaMovement(0, 0, 0);
         }
     }
 

@@ -11,11 +11,11 @@
 			},
 			"trigger": "minecraft:inventory_changed"
 		},
-		"has_obsidian": {
+		"has_bricks": {
 			"conditions": {
 				"items": [
 					{
-						"items": "minecraft:obsidian"
+						"items": "minecraft:bricks"
 					}
 				]
 			},
@@ -28,7 +28,7 @@
 			"trigger": "minecraft:recipe_unlocked"
 		}
 	},
-	"requirements": [["has_the_recipe", "has_ender_pearl", "has_obsidian"]],
+	"requirements": [["has_the_recipe", "has_ender_pearl", "has_bricks"]],
 	"rewards": {
 		"recipes": ["creativeworld:creativeworld_portal"]
 	}

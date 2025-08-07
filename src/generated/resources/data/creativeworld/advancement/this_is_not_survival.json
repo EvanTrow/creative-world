@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:story/mine_stone",
+  "criteria": {
+    "entered_creative_world": {
+      "conditions": {
+        "to": "creativeworld:creativeworld"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancement.creativeworld.this_is_not_survival.desc"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "creativeworld:creativeworld_portal"
+    },
+    "title": {
+      "translate": "advancement.creativeworld.this_is_not_survival"
+    }
+  },
+  "requirements": [
+    [
+      "entered_creative_world"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -25,13 +25,13 @@ public final class CreativeWorldRecipeProvider extends RecipeProvider {
     @Override
     protected void buildRecipes(final @NotNull RecipeOutput recipeOutput) {
         ShapedRecipeBuilder.shaped(RecipeCategory.TRANSPORTATION, CreativeWorld.CREATIVE_WORLD_PORTAL_ITEM.get())
-                .pattern("eee")
-                .pattern("eoe")
-                .pattern("eee")
-                .define('e', Items.ENDER_PEARL)
-                .define('o', Items.OBSIDIAN)
+                .pattern("bbb")
+                .pattern("bpb")
+                .pattern("bbb")
+                .define('b', Items.BRICKS)
+                .define('p', Items.ENDER_PEARL)
                 .unlockedBy("has_ender_pearl", has(Items.ENDER_PEARL))
-                .unlockedBy("has_obsidian", has(Items.OBSIDIAN))
+                .unlockedBy("has_bricks", has(Items.BRICKS))
                 .save(recipeOutput, ResourceLocation.fromNamespaceAndPath(CreativeWorld.MOD_ID, "creativeworld_portal"));
     }
 }

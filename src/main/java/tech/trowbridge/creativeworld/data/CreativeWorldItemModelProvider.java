@@ -1,9 +1,10 @@
 package tech.trowbridge.creativeworld.data;
 
+import org.jetbrains.annotations.NotNull;
+
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.NotNull;
 import tech.trowbridge.creativeworld.CreativeWorld;
 
 public final class CreativeWorldItemModelProvider extends ItemModelProvider {
@@ -14,6 +15,10 @@ public final class CreativeWorldItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        basicItem(CreativeWorld.CREATIVE_WORLD_PORTAL_ITEM.get());
+        // Use block model as parent for block item
+        withExistingParent(
+            CreativeWorld.CREATIVE_WORLD_PORTAL_ITEM.getId().getPath(),
+            modLoc("block/" + CreativeWorld.CREATIVE_WORLD_PORTAL_ITEM.getId().getPath())
+        );
     }
 }
