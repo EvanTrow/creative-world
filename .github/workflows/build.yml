@@ -49,6 +49,13 @@ jobs:
           version=$(grep '^mod_version=' gradle.properties | cut -d'=' -f2)
           echo "version=$version" >> $GITHUB_OUTPUT
 
+      # Find the built JAR file
+      - name: Find JAR
+        id: jar
+        run: |
+          jar_path=$(ls build/libs/*.jar | head -n 1)
+          echo "jar_path=$jar_path" >> $GITHUB_OUTPUT
+
       - name: Check if tag exists
         id: check_tag
         run: |
@@ -66,5 +73,6 @@ jobs:
           tag_name: v${{ steps.get_version.outputs.version }}
           name: Release v${{ steps.get_version.outputs.version }}
           generate_release_notes: true
+          files: ${{ steps.jar.outputs.jar_path }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
